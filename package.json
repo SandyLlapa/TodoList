@@ -1,0 +1,19 @@
+{
+  "name": "llapa016-hw5",
+  "version": "1.0.0",
+  "description": "hw5",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sandy",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "mysql2": "^3.11.5",
+    "pug": "^3.0.3"
+  }
+}
