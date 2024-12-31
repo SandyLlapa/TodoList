@@ -1,4 +1,4 @@
-Note: sql database has expired 
+Note: sql database has expired, website may not work as expected 
 
 
 Features:
