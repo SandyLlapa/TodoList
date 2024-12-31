@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Contacts</title>
+  <link rel="stylesheet" href="/css/contactsStyle.css">
+
+</head>
+
+<body>
+  <script src="/js/contactScript.js"></script>
+
+  <div id="navigation">
+    <a href="mycontacts.html">My Contacts</a>
+    <!-- <a href="aboutme.html">About Me</a> -->
+    <a href="contactForm.html">Add Contact</a>
+    <!-- <a href="stocks.html">My Stocks</a> -->
+    <button id="logout" onclick="window.location.href='/logout'">Log out</button>
+  </div>
+
+  <h1>My Contacts</h1>
+
+  <div class="container">
+    <table id="contactsTable">
+      <thead>
+        <tr id="titles">
+          <th>Name</th>
+          <th>Address</th>
+          <th>Info</th>
+          <th>Email</th>
+          <th>Website</th>
+          <th>Remove</th>
+          <th>Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- this is where the contacts will be inserted -->
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <button id="sort">Sort Contacts</button>
+  </div>
+  
+
+  <script>
+
+    fetch('/contacts')
+      .then(response => response.json())
+      .then(contacts => {
+        const table = document.querySelector('#contactsTable tbody');
+
+        contacts.forEach(contact => {
+          const row = document.createElement('tr'); // create tr tag
+
+          row.innerHTML =
+          `<td style="text-align: center; vertical-align: middle;">${contact.name}</td>
+           <td style="text-align: center; vertical-align: middle;">${contact.address}</td>
+           <td style="text-align: center; vertical-align: middle;">${contact.info}</td>
+           <td style="text-align: center; vertical-align: middle;"><a href = "mailto:${contact.email}">${contact.email}</a></td>
+           <td style="text-align: center; vertical-align: middle;"><a href="${contact.url}" target="_blank">${contact.url}</a></td>
+           <td style="text-align: center; vertical-align: middle;"><button id="delete-${contact.id}">Delete</button></td>
+           <td style="text-align: center; vertical-align: middle;"><button id="$edit-${contact.id}">Edit</button></td>`;
+           
+          table.appendChild(row); // add to tbody
+        });
+      })
+      .catch(error => { console.log("Request Failed", error); });
+
+
+
+    document.querySelector('#contactsTable').addEventListener('click', (e) => {
+      if (e.target.tagName=='BUTTON' && e.target.innerHTML=="Delete") {  // get button tag
+        const contactId = e.target.id.split('-')[1];
+
+        fetch(`/delete/${contactId}`, {method: 'DELETE',}) // call delete route
+          .then(response => {
+            if (!response.ok) throw new Error('Failed to delete contact');;
+            console.log("Contact deleted");
+
+            e.target.closest('tr').remove();
+          })
+          .catch(error => console.error("Error deleting contact:", error));
+      }
+      else if (e.target.tagName=='BUTTON' && e.target.innerHTML=="Edit") {  // get button tag
+        const contactId = e.target.id.split('-')[1];
+        console.log(`Editing contact with ID: ${contactId}`);
+
+        window.location.href=`/edit-contact/${contactId}`;
+      }
+    });
+
+    // BONUS: sort contacts
+    document.getElementById('sort').addEventListener('click', (e) => {
+
+      fetch(`/sort-contacts`) // call sort-contacts
+        .then(response => response.json())
+        .then((contacts)=>{
+          const table = document.querySelector('#contactsTable tbody');
+          table.innerHTML='';
+
+          contacts.forEach(contact => {
+          const row = document.createElement('tr'); // create tr tag
+
+          row.innerHTML =
+          `<td style="text-align: center; vertical-align: middle;">${contact.name}</td>
+           <td style="text-align: center; vertical-align: middle;">${contact.address}</td>
+           <td style="text-align: center; vertical-align: middle;">${contact.info}</td>
+           <td style="text-align: center; vertical-align: middle;"><a href = "mailto:${contact.email}">${contact.email}</a></td>
+           <td style="text-align: center; vertical-align: middle;"><a href="${contact.url}" target="_blank">${contact.url}</a></td>
+           <td style="text-align: center; vertical-align: middle;"><button id="delete-${contact.id}">Delete</button></td>
+           <td style="text-align: center; vertical-align: middle;"><button id="$edit-${contact.id}">Edit</button></td>`;
+           
+          table.appendChild(row); // add to tbody
+        });
+
+      })
+      .catch(error => { console.log("Request Failed", error); });
+    });
+  </script>
+</body>
+</html>

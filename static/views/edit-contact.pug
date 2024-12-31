@@ -1,0 +1,46 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Edit Contact
+    link(rel='stylesheet', href='/css/formStyle.css')
+  body
+    script(src='/js/form.js')
+    #navigation
+      a(href='mycontacts.html') My Contacts
+      a(href='contactForm.html') Add Contact
+      button(onclick="window.location.href='/logout'") Log out
+    #content
+      form(action=`/edit-contact/${contact.id}`, method='POST')
+        #nameInput
+          label(for='name') Name:
+          input#name(pattern='^[A-Za-z0-9]+(?: [A-Za-z0-9]+)*$', type='text', name='name', value=contact.name, required='')
+          small Format: John Doe
+          br
+          br
+        #locationInput
+          label(for='address') Location:
+          input#address(pattern="^[A-Za-z0-9 ,.'-]+$", type='text', name='address', size='50', value=contact.address, required='')
+          small Format: 123 45th st
+          br
+          br
+        #infoInput
+          label(for='info') Info:
+          input#info(type='text', name='info',value=contact.info, required='')
+          br
+          br
+          // <small>Format: 123-123-1234</small><br><br>
+        #emailInput
+          label(for='email') Email:
+          input#email(pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$', type='email', name='email',value=contact.email, required='')
+          small Format: example@gmail.com
+          br
+          br
+        #websiteInput
+          label(for='url') Website:
+          input#url(type='url', name='url',value=contact.url, required='')
+          small Format: https://example.com
+          br
+          br
+        input(type='submit', value='Save Changes')

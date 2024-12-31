@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account</title>
+  <link rel="stylesheet" href="/css/newAccount.css">
+</head>
+<body>
+  <div id="navigation">
+     <h1 style="color: #96add6;">Create Account</h1>
+    <a href="login.html">Login</a>
+  </div>
+ 
+
+  <div id="container">
+    
+    <form id="accountForm" action="/create-account" method="POST">
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" size="50" required>
+        <br><br>
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" size="50" required>
+        <br><br>
+      </div>
+      <input id="createAccountButton" type="submit" value="Create Account">
+    </form>
+  </div>
+
+  <script>
+
+    document.getElementById('accountForm').addEventListener('submit',async(event)=>{
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      try{
+        const response = await fetch('/create-account',{
+          method:'POST',headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({username,password})
+        });
+        
+        if(!response.ok){
+          throw new Error('Cannot create account');
+        } 
+        else{
+          window.location.href='/mycontacts.html';
+        }
+      }
+      catch(error){
+        console.error(`Error creating account: ${error}`);
+        alert("Failed to create account. Try again");
+      }
+    });
+  </script>
+  
+</body>
+</html>

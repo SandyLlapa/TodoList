@@ -1,0 +1,80 @@
+body{
+
+  background-color: #96add6;
+}
+
+#navigation{
+  display:flex;
+  justify-content: center;
+  background-color: #e85234ce;
+  color:#f9b8afaf;
+  gap:90px;
+}
+
+#navigation > a{
+  font-size:x-large;
+  padding:10px;
+  border: solid 3px rgb(218, 218, 218);
+  border-style: outset;
+  background-color: #f9b8afaf;
+  text-decoration: none;
+}
+
+#navigation > a:hover {
+  color: rgb(235, 253, 94);
+}
+
+ #picture img{
+  height:325px;
+ }
+
+#Information{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+#backgroundInfo, #musicVideo,#insta,#password{
+
+  width:35%;
+  border: 2px solid #e85234ce;
+  padding:25px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9b8afaf;
+  border: 2px solid #e85234ce;
+
+}
+
+#facts{
+  padding-top: 40px;
+  padding-left: 0px;
+}
+
+#facts h3{
+  padding-left: 40px;
+}
+
+iframe{
+  border:0px;
+  width: 100%;
+  height:500px;
+}
+
+#musicVideo>iframe{
+  display: block;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#social{
+  display:flex;
+  justify-content: space-around;
+}
+
+.instagram-media {
+  height:100%;
+  width: 50%;
+}
+

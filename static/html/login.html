@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+  <div id="navigation">
+    <a href="mycontacts.html">My Contacts</a>
+    <!-- <a href="aboutme.html">About Me</a> -->
+    <a href="contactForm.html">Add Contact</a>
+    <!-- <a href="stocks.html">My Stocks</a> -->
+    <a href="create-account.html">Create Account</a>
+
+  </div>
+
+  <div id="container">
+
+    <form id="login">
+      <div id="usernameInput">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" size="50" required>
+        <br><br>
+      </div>
+
+      <div id="passwordInput">
+        <label for="password">Password:</label>
+        <input type="text" id="password" name="password" size="50" required>
+        <br><br>
+      </div>
+      <input id="loginButton" type="submit" value="Login">
+    </form>
+  </div>
+  <script>
+
+    document.getElementById('login').addEventListener('submit',async(event)=>{
+
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      try{
+        const response = await fetch('/login',{
+          method:'POST',headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({username,password})
+        });
+        
+        if(!response.ok){ // check status 
+            throw new Error('Incorrect password/username');
+        } 
+        else{ // redirect to contacts.html
+          window.location.href='/mycontacts.html';
+        }
+      }
+      catch(error){ // username/password not in database
+        console.error(`Error logging in: ${error}`);
+        alert("Incorrect username/passowrd");
+      }
+    });
+  </script>
+</body>
+</html>
